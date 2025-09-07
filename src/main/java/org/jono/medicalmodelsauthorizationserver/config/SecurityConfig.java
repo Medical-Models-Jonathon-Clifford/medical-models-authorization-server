@@ -55,7 +55,7 @@ public class SecurityConfig {
 
     @Bean
     @Order(1)
-    public SecurityFilterChain asFilterChain(final HttpSecurity http)
+    public SecurityFilterChain authzServerFilterChain(final HttpSecurity http)
             throws Exception {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
 
@@ -70,13 +70,7 @@ public class SecurityConfig {
                                            exceptions.defaultAuthenticationEntryPointFor(
                                                    new LoginUrlAuthenticationEntryPoint("/login"),
                                                    new MediaTypeRequestMatcher(MediaType.TEXT_HTML))
-                )
-                .oauth2ResourceServer((resourceServer) -> resourceServer
-                        .jwt(j -> j.jwkSetUri(keySetUri)));
-
-        // http.authorizeHttpRequests(
-        //         c -> c.anyRequest().authenticated()
-        // );
+                );
 
         return http.build();
     }
@@ -119,7 +113,7 @@ public class SecurityConfig {
                 .clientSecret("secret")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .redirectUri("http://localhost:8081/login/oauth2/code/my_authorization_server")
+                .redirectUri("http://localhost:7071/login/oauth2/code/my_authorization_server")
                 .scope(OidcScopes.OPENID)
                 .build();
 
