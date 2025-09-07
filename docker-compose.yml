@@ -1,0 +1,11 @@
+services:
+  db:
+    image: arm64v8/mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123rootpassword
+      MYSQL_DATABASE: mm-admin
+      MYSQL_USER: mm-admin-user
+      MYSQL_PASSWORD: 123userpassword
+    ports:
+      - 3306:3306
