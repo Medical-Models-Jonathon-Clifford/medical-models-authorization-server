@@ -65,12 +65,11 @@ public class SecurityConfig {
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 .oidc(Customizer.withDefaults());
 
-        http
-                .exceptionHandling((exceptions) ->
-                                           exceptions.defaultAuthenticationEntryPointFor(
-                                                   new LoginUrlAuthenticationEntryPoint("/login"),
-                                                   new MediaTypeRequestMatcher(MediaType.TEXT_HTML))
-                );
+        http.exceptionHandling((exceptions) ->
+                                       exceptions.defaultAuthenticationEntryPointFor(
+                                               new LoginUrlAuthenticationEntryPoint("/login"),
+                                               new MediaTypeRequestMatcher(MediaType.TEXT_HTML))
+        );
 
         return http.build();
     }
@@ -123,7 +122,8 @@ public class SecurityConfig {
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .redirectUris(uris -> uris.add("http://localhost:3000/api/auth/callback/my_authorization_server"))
-                .redirectUris(uris -> uris.add("https://www.medicalmodels.net/api/auth/callback/my_authorization_server"))
+                .redirectUris(
+                        uris -> uris.add("https://www.medicalmodels.net/api/auth/callback/my_authorization_server"))
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
                 .clientSettings(ClientSettings.builder()
