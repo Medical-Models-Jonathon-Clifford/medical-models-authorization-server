@@ -1,1 +1,1 @@
-docker push jonathonclifford/mm-models-service
+docker push jonathonclifford/mm-authorization-server
