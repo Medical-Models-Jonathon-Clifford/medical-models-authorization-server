@@ -44,6 +44,7 @@ public class UserInfoRepository {
         final MmUser rtrenneman = mmUserBuilder.builder()
                 .username("rtrenneman")
                 .password("N78S9x9ft$HFGMrf")
+                .companyId("1")
                 .honorific("Mr.")
                 .givenName("Roy")
                 .familyName("Trenneman")
@@ -53,6 +54,7 @@ public class UserInfoRepository {
         final MmUser mmoss = mmUserBuilder.builder().username(
                         "mmoss")
                 .password("y?jaHKGTaji6xAd9")
+                .companyId("1")
                 .honorific("Mr.")
                 .givenName("Maurice")
                 .familyName("Moss")
@@ -62,6 +64,7 @@ public class UserInfoRepository {
         final MmUser jbarber = mmUserBuilder.builder()
                 .username("jbarber")
                 .password("GM!mQn!8K8Db9p#p")
+                .companyId("1")
                 .honorific("Ms.")
                 .givenName("Jen")
                 .familyName("Barber")
@@ -71,6 +74,7 @@ public class UserInfoRepository {
         final MmUser lcuddy = mmUserBuilder.builder()
                 .username("lcuddy")
                 .password("YjzJdH6!G??tntQ#")
+                .companyId("2")
                 .honorific("Dr.")
                 .givenName("Lisa")
                 .familyName("Cuddy")
@@ -80,6 +84,7 @@ public class UserInfoRepository {
         final MmUser ghouse = mmUserBuilder.builder()
                 .username("ghouse")
                 .password("S!p5fs!MFx&&GTPs")
+                .companyId("2")
                 .honorific("Dr.")
                 .givenName("Gregory")
                 .familyName("House")
@@ -89,6 +94,7 @@ public class UserInfoRepository {
         final MmUser jwilson = mmUserBuilder.builder()
                 .username("jwilson")
                 .password("s9dQd$grL!!Y5?$h")
+                .companyId("2")
                 .honorific("Dr.")
                 .givenName("James")
                 .familyName("Wilson")
@@ -98,6 +104,7 @@ public class UserInfoRepository {
         final MmUser spotter = mmUserBuilder.builder()
                 .username("spotter")
                 .password("N78S9x9ft$HFGMrf")
+                .companyId("3")
                 .honorific("Col.")
                 .givenName("Sherman T.")
                 .familyName("Potter")
@@ -107,6 +114,7 @@ public class UserInfoRepository {
         final MmUser bpierce = mmUserBuilder.builder()
                 .username("bpierce")
                 .password("C$At$BBGL5yLP&AM")
+                .companyId("3")
                 .honorific("Cap.")
                 .givenName("\"Hawkeye\"")
                 .familyName("Pierce")
@@ -116,6 +124,7 @@ public class UserInfoRepository {
         final MmUser woreilly = mmUserBuilder.builder()
                 .username("woreilly")
                 .password("so#KKNYiqe!F5!Ph")
+                .companyId("3")
                 .honorific("Priv.")
                 .givenName("Walter \"Radar\"")
                 .familyName("O’Reilly")
@@ -133,15 +142,15 @@ public class UserInfoRepository {
         this.userInfo.put("bpierce", bpierce);
         this.userInfo.put("woreilly", woreilly);
 
-        this.companyInfo.add(new LoginCompanies("Medical Models Support Staff",
+        this.companyInfo.add(new LoginCompanies("Medical Models Support Centre",
                                                 List.of(rtrenneman.getLoginUser(),
                                                         mmoss.getLoginUser(),
                                                         jbarber.getLoginUser())));
-        this.companyInfo.add(new LoginCompanies("House MD Centre for Superheroes",
+        this.companyInfo.add(new LoginCompanies("Titan Teaching Hospital",
                                                 List.of(lcuddy.getLoginUser(),
                                                         ghouse.getLoginUser(),
                                                         jwilson.getLoginUser())));
-        this.companyInfo.add(new LoginCompanies("Old Action Heroes M*A*S*H",
+        this.companyInfo.add(new LoginCompanies("The Bricko Army Surgical Hospital",
                                                 List.of(spotter.getLoginUser(),
                                                         bpierce.getLoginUser(),
                                                         woreilly.getLoginUser())));

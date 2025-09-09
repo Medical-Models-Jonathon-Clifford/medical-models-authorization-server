@@ -32,6 +32,7 @@ public class MmUserBuilder {
         private String familyName;
         private String base64Picture;
         private String honorific;
+        private String companyId;
 
         Builder(final String baseUrl) {
             this.baseUrl = baseUrl;
@@ -73,6 +74,11 @@ public class MmUserBuilder {
             return this;
         }
 
+        public Builder companyId(final String companyId) {
+            this.companyId = companyId;
+            return this;
+        }
+
         public MmUser build() {
             final LoginUser loginUser = new LoginUser(this.honorific + " " + this.givenName + " " + this.familyName,
                                                       this.username, this.password);
@@ -93,6 +99,7 @@ public class MmUserBuilder {
                     .birthdate("1970-01-01")
                     .claim("roles", userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList())
                     .claim("honorific", this.honorific)
+                    .claim("companyId", this.companyId)
                     .updatedAt("1970-01-01T00:00:00Z")
                     .build();
             return new MmUser(loginUser, userDetails, oidcUserInfo1, this.base64Picture);
