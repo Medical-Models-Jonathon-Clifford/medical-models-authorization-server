@@ -33,9 +33,9 @@ pipeline {
             steps {
                 echo '------ kubectl version ------'
                 sh 'kubectl version --client'
-                echo '------ Delete current mm-models-service pods ------'
-                sh 'kubectl --kubeconfig $MY_KUBECONFIG delete deployment deployment-mm-models-service --ignore-not-found'
-                echo '------ Deploying new version of mm-models-service ------'
+                echo '------ Delete current mm-authorization-server pods ------'
+                sh 'kubectl --kubeconfig $MY_KUBECONFIG delete deployment deployment-mm-authorization-server --ignore-not-found'
+                echo '------ Deploying new version of mm-authorization-server ------'
                 sh 'kubectl --kubeconfig $MY_KUBECONFIG apply -f mm-models.yaml'
             }
         }
