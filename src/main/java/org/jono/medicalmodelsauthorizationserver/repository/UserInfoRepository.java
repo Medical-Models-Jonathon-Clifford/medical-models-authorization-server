@@ -136,7 +136,7 @@ public class UserInfoRepository {
                 .companyId("3")
                 .honorific("Priv.")
                 .givenName("Walter \"Radar\"")
-                .familyName("O’Reilly")
+                .familyName("O'Reilly")
                 .roles(List.of("USER"))
                 .base64Picture(getAvatar("images/mash-radar-1.png"))
                 .build();
