@@ -42,6 +42,7 @@ public class UserInfoRepository {
 
     public UserInfoRepository(final MmUserBuilder mmUserBuilder) throws IOException {
         final MmUser rtrenneman = mmUserBuilder.builder()
+                .userId("1")
                 .username("rtrenneman")
                 .password("N78S9x9ft$HFGMrf")
                 .companyId("1")
@@ -53,6 +54,7 @@ public class UserInfoRepository {
                 .build();
         final MmUser mmoss = mmUserBuilder.builder().username(
                         "mmoss")
+                .userId("2")
                 .password("y?jaHKGTaji6xAd9")
                 .companyId("1")
                 .honorific("Mr.")
@@ -62,6 +64,7 @@ public class UserInfoRepository {
                 .base64Picture(getAvatar("images/it-crowd-moss-1.png"))
                 .build();
         final MmUser jbarber = mmUserBuilder.builder()
+                .userId("3")
                 .username("jbarber")
                 .password("GM!mQn!8K8Db9p#p")
                 .companyId("1")
@@ -72,6 +75,7 @@ public class UserInfoRepository {
                 .base64Picture(getAvatar("images/it-crowd-jen-1.png"))
                 .build();
         final MmUser lcuddy = mmUserBuilder.builder()
+                .userId("4")
                 .username("lcuddy")
                 .password("YjzJdH6!G??tntQ#")
                 .companyId("2")
@@ -82,6 +86,7 @@ public class UserInfoRepository {
                 .base64Picture(getAvatar("images/cutty-profile-picture.png"))
                 .build();
         final MmUser ghouse = mmUserBuilder.builder()
+                .userId("5")
                 .username("ghouse")
                 .password("S!p5fs!MFx&&GTPs")
                 .companyId("2")
@@ -92,6 +97,7 @@ public class UserInfoRepository {
                 .base64Picture(getAvatar("images/house-md-image-2.png"))
                 .build();
         final MmUser jwilson = mmUserBuilder.builder()
+                .userId("6")
                 .username("jwilson")
                 .password("s9dQd$grL!!Y5?$h")
                 .companyId("2")
@@ -102,6 +108,7 @@ public class UserInfoRepository {
                 .base64Picture(getAvatar("images/house-wilson-image-1.png"))
                 .build();
         final MmUser spotter = mmUserBuilder.builder()
+                .userId("7")
                 .username("spotter")
                 .password("N78S9x9ft$HFGMrf")
                 .companyId("3")
@@ -112,6 +119,7 @@ public class UserInfoRepository {
                 .base64Picture(getAvatar("images/mash-potter-1.png"))
                 .build();
         final MmUser bpierce = mmUserBuilder.builder()
+                .userId("8")
                 .username("bpierce")
                 .password("C$At$BBGL5yLP&AM")
                 .companyId("3")
@@ -122,6 +130,7 @@ public class UserInfoRepository {
                 .base64Picture(getAvatar("images/mash-hawkeye-1.png"))
                 .build();
         final MmUser woreilly = mmUserBuilder.builder()
+                .userId("9")
                 .username("woreilly")
                 .password("so#KKNYiqe!F5!Ph")
                 .companyId("3")
