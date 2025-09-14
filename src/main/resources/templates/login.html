@@ -1,7 +1,145 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Spring Security Example </title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <title>Medical Models - Login</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .company {
+            max-width: 300px;
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .company-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            background-color: #ddd;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .company-logo-img {
+            width: 88px;
+            height: 88px;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+
+        .company-name {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .users-container {
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .user-box {
+            width: 100%;
+        }
+
+        .user {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 10px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        .picture-and-name {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: flex-start;
+            align-items: center;
+            column-gap: 12px;
+            box-sizing: border-box;
+            padding: 0 8px;
+        }
+
+        .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #ccc;
+        }
+
+        .profile-pic-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #ccc;
+        }
+
+        .user-info {
+            flex-grow: 1;
+        }
+
+        .user-name {
+            font-weight: bold;
+        }
+
+        .user-role {
+            font-size: 0.9em;
+            color: #666;
+            text-transform: capitalize;
+        }
+
+        .login-button {
+            background-color: #e0e0e0;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .login-button:hover {
+            background-color: rgba(202,202,202,0.7);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
 <div th:if="${param.error}">
@@ -10,16 +148,18 @@
 <div th:if="${param.logout}">
     You have been logged out.
 </div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
 
-<div th:each="company : ${loginCompanies}">
-    <h1 th:text="${company.name}"></h1>
-    <div th:each="user : ${company.users}">
-        <div th:replace="~{fragments :: loginForm(${user.displayName}, ${user.username}, ${user.password})}"></div>
+<div class="container">
+    <div th:each="company : ${loginCompanies}" class="company">
+        <div class="company-logo">
+            <img class="company-logo-img" th:src="'/companies/pictures/company-logo-' + ${company.companyId} + '.png'" alt="Company Logo"/>
+        </div>
+        <div class="company-name"><p th:text="${company.name}"></p></div>
+        <div class="users-container">
+            <div th:each="user : ${company.users}" class="user-box">
+                <div th:replace="~{fragments :: loginForm(${user.displayName}, ${user.role}, ${user.username}, ${user.password})}"></div>
+            </div>
+        </div>
     </div>
 </div>
 

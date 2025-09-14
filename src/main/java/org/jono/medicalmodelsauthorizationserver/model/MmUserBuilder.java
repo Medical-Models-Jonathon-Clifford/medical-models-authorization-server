@@ -87,6 +87,7 @@ public class MmUserBuilder {
 
         public MmUser build() {
             final LoginUser loginUser = new LoginUser(this.honorific + " " + this.givenName + " " + this.familyName,
+                                                      this.roles.getFirst().toLowerCase(),
                                                       this.username, this.password);
             final UserDetails userDetails = User.withUsername(this.username)
                     .password(this.password)
