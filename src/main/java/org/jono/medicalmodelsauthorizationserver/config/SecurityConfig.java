@@ -1,5 +1,7 @@
 package org.jono.medicalmodelsauthorizationserver.config;
 
+import static org.jono.medicalmodelsauthorizationserver.utils.DateTimeUtils.parseTimeout;
+
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
@@ -10,6 +12,7 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 import org.jono.medicalmodelsauthorizationserver.service.MmUserInfoService;
@@ -49,6 +52,9 @@ public class SecurityConfig {
 
     public static final String RSA_ALGORITHM = "RSA";
     public static final int KEY_SIZE = 2048;
+
+    @Value("${jwt.timeout:30m}")
+    private String jwtTimeout;
 
     @Value("${keySetURI}")
     private String keySetUri;
@@ -159,6 +165,8 @@ public class SecurityConfig {
     @Bean
     public OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer(final MmUserInfoService mmUserInfoService) {
         return (context) -> {
+            context.getClaims().expiresAt(createJwtExpirationTime());
+
             if (OidcParameterNames.ID_TOKEN.equals(context.getTokenType().getValue())) {
                 final OidcUserInfo userInfo = mmUserInfoService.loadUser(
                         context.getPrincipal().getName());
@@ -166,5 +174,10 @@ public class SecurityConfig {
                                                    claims.putAll(userInfo.getClaims()));
             }
         };
+    }
+
+    private Instant createJwtExpirationTime() {
+        final long jwtTimeoutSeconds = parseTimeout(jwtTimeout);
+        return Instant.now().plusSeconds(jwtTimeoutSeconds);
     }
 }
