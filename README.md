@@ -1,6 +1,6 @@
 # Medical Models OAuth 2.0 Authorization Server
 
-Java Spring Boot OAuth 2.0 authorization server for the Medical Models Application.
+Java Spring Boot OAuth 2.0 authorization server for the Medical Models application.
 
 If you're interested in the architecture of Medical Models at a high level. Look
 here - [medical-models-system-documentation](https://github.com/Medical-Models-Jonathon-Clifford/medical-models-system-documentation).
@@ -30,7 +30,7 @@ cd medical-models-service
 ```
 
 4. Install maven dependencies, build the project and run the tests. Note the use of `./mvnw`. This uses a local copy of
-   maven specific to the project. You won't need to globally install maven to run this command.
+   maven specific to this project. You won't need to globally install maven to run this command.
 
 ```bash
 ./mvnw clean install
@@ -44,12 +44,12 @@ cd medical-models-service
 
 5. Navigate to http://localhost:8081 in a browser to view medical-models-service. You should get a 403 Unauthorized.
    Medical-models-ui and medical-models-authorization-server will handle the authentication.
-6. To run the full Medical Models application.
-    7. Start the medical-models-authorization-server by following its instructions
-       here - https://github.com/Medical-Models-Jonathon-Clifford/medical-models-authorization-server
-    8. Start the medical-models-ui by following its instructions
-       here - https://github.com/Medical-Models-Jonathon-Clifford/medical-models-ui
-    9. Navigate to http://localhost:3000 to see the full application running. You should see a login screen.
+6. To run the full Medical Models application, run the following steps.
+7. Start the medical-models-authorization-server by following its instructions
+   here - https://github.com/Medical-Models-Jonathon-Clifford/medical-models-authorization-server
+8. Start the medical-models-ui by following its instructions
+   here - https://github.com/Medical-Models-Jonathon-Clifford/medical-models-ui
+9. Navigate to http://localhost:3000 to see the full application running. You should see a login screen.
 
 ## Local Development
 
@@ -57,14 +57,11 @@ It is recommended to use an IDE with good support for Java and Spring like Intel
 reloading and other features useful for efficient development - https://www.jetbrains.com/idea/spring/.
 
 1. If you would like to run the application from the command line, execute the following steps.
-2. ...Install and build the project.
-
+2. Install dependencies and build the project.
 ```bash
 ./mvnw clean install
 ```
-
 3. Run the application.
-
 ```bash
 ./mvnw spring-boot:run
 ```
