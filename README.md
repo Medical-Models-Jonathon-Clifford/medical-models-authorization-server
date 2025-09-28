@@ -20,7 +20,7 @@ If you want to see the other services, find them here:
 2. Clone this repo. For example, to clone using ssh:
 
 ```bash
-git clone git@github.com:Medical-Models-Jonathon-Clifford/medical-models-service.git
+git clone git@github.com:Medical-Models-Jonathon-Clifford/medical-models-authorization-server.git
 ```
 
 3. Navigate into the project directory
