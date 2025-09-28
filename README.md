@@ -26,7 +26,7 @@ git clone git@github.com:Medical-Models-Jonathon-Clifford/medical-models-authori
 3. Navigate into the project directory
 
 ```bash
-cd medical-models-service
+cd medical-models-authorization-server
 ```
 
 4. Install maven dependencies, build the project and run the tests. Note the use of `./mvnw`. This uses a local copy of
@@ -42,14 +42,14 @@ cd medical-models-service
 ./mvnw spring-boot:run
 ```
 
-5. Navigate to http://localhost:8081 in a browser to view medical-models-service. You should get a 403 Unauthorized.
-   Medical-models-ui and medical-models-authorization-server will handle the authentication.
+5. Navigate to http://localhost:7071/login in a browser to view the medical-models-authorization-service's login page. Clicking "Sign as ..." won't do anything useful until you start medical-models-ui and medical-models-service.
 6. To run the full Medical Models application, run the following steps.
-7. Start the medical-models-authorization-server by following its instructions
-   here - https://github.com/Medical-Models-Jonathon-Clifford/medical-models-authorization-server
+7. Start the medical-models-service by following its instructions
+   here - https://github.com/Medical-Models-Jonathon-Clifford/medical-models-service
 8. Start the medical-models-ui by following its instructions
    here - https://github.com/Medical-Models-Jonathon-Clifford/medical-models-ui
-9. Navigate to http://localhost:3000 to see the full application running. You should see a login screen.
+9. Navigate to http://localhost:3000 to see the full application running. You should be redirected to a login screen the first time.
+10. There are Demo users for each role. Use an incognito browser to log in to different roles to test different workflows.
 
 ## Local Development
 
@@ -82,4 +82,3 @@ reloading and other features useful for efficient development - https://www.jetb
 | Google Guava    | Library of useful collections and utilities for Java.                                                              | https://github.com/google/guava/wiki                         |
 | Lombok          | Generates Java boilerplate with annotations.                                                                       | https://projectlombok.org/features/                          |
 | Docker Compose  | Useful for running infrastructure dependencies locally. e.g. Databases, Object stores, etc.                        | https://docs.docker.com/compose/                             |
-
