@@ -68,6 +68,20 @@ reloading and other features useful for efficient development - https://www.jetb
 
 4. After making a code change, kill the spring boot process, e.g. with ctrl-c in its terminal, and re-run it.
 
+### Skip Tests
+
+Failing tests will fail the build. To skip tests when you run the maven build, use the following:
+```bash
+./mvnw clean install -DskipTests=true
+```
+
+### Skip Checkstyle
+
+Checkstyle is configured to fail the build if it detects a violation. To skip checkstyle when you run the maven build, use the following:
+```bash
+./mvnw clean install -Dcheckstyle.skip=true
+```
+
 ## Tooling
 
 | Tool            | Notes                                                                                                              | Docs                                                         |
@@ -78,6 +92,7 @@ reloading and other features useful for efficient development - https://www.jetb
 | Spring Security | Authentication and authorization framework for Java applications.                                                  | https://docs.spring.io/spring-security/reference/index.html  |
 | JUnit           | De facto standard for automated testing in Java.                                                                   | https://docs.junit.org/current/user-guide/                   |
 | AssertJ         | Rich assertions for JUnit tests.                                                                                   | https://assertj.github.io/doc/                               |
+| Checkstyle     | Generates a report on violations of code style.                                                                    | https://maven.apache.org/plugins/maven-checkstyle-plugin/index.html |
 | Thymeleaf       | Server-side template engine for Java.                                                                              | https://www.thymeleaf.org/documentation.html                 |
 | Google Guava    | Library of useful collections and utilities for Java.                                                              | https://github.com/google/guava/wiki                         |
 | Lombok          | Generates Java boilerplate with annotations.                                                                       | https://projectlombok.org/features/                          |
