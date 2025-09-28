@@ -42,7 +42,7 @@ cd medical-models-authorization-server
 ./mvnw spring-boot:run
 ```
 
-5. Navigate to http://localhost:7071/login in a browser to view the medical-models-authorization-service's login page. Clicking "Sign as ..." won't do anything useful until you start medical-models-ui and medical-models-service.
+5. Navigate to http://localhost:7071/login in a browser to view the medical-models-authorization-service's login page. Clicking "Sign In as…" won't do anything useful until you start medical-models-ui and medical-models-service.
 6. To run the full Medical Models application, run the following steps.
 7. Start the medical-models-service by following its instructions
    here - https://github.com/Medical-Models-Jonathon-Clifford/medical-models-service
