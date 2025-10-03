@@ -1,21 +1,21 @@
 package org.jono.medicalmodelsauthorizationserver.model;
 
-import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 
-@Table("user")
-@AllArgsConstructor
 @Data
 public class User {
-    @Id
-    private String id;
-    private String email;
-    private String profilePicture;
-    private String name;
-    private LocalDateTime createdDate;
-    private String password;
-    private String state;
+    private LoginUser loginUser;
+    private UserDetails userDetails;
+    private OidcUserInfo oidcUserInfo;
+    private String base64Picture;
+
+    public User(final LoginUser loginUser, final UserDetails userDetails, final OidcUserInfo oidcUserInfo,
+            final String base64Picture) {
+        this.loginUser = loginUser;
+        this.userDetails = userDetails;
+        this.oidcUserInfo = oidcUserInfo;
+        this.base64Picture = base64Picture;
+    }
 }

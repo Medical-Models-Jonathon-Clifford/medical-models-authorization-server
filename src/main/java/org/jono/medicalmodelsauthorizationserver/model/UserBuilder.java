@@ -3,17 +3,16 @@ package org.jono.medicalmodelsauthorizationserver.model;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MmUserBuilder {
+public class UserBuilder {
 
     private final String baseUrl;
 
-    public MmUserBuilder(@Value("${base.url}") final String baseUrl) {
+    public UserBuilder(@Value("${base.url}") final String baseUrl) {
         this.baseUrl = baseUrl;
     }
 
@@ -85,11 +84,12 @@ public class MmUserBuilder {
             return this;
         }
 
-        public MmUser build() {
+        public User build() {
             final LoginUser loginUser = new LoginUser(this.honorific + " " + this.givenName + " " + this.familyName,
                                                       this.roles.getFirst().toLowerCase(),
                                                       this.username, this.password);
-            final UserDetails userDetails = User.withUsername(this.username)
+            final UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(
+                            this.username)
                     .password(this.password)
                     .roles(this.roles.toArray(new String[0]))
                     .build();
@@ -110,7 +110,7 @@ public class MmUserBuilder {
                     .claim("userId", this.userId)
                     .updatedAt("1970-01-01T00:00:00Z")
                     .build();
-            return new MmUser(loginUser, userDetails, oidcUserInfo1, this.base64Picture);
+            return new User(loginUser, userDetails, oidcUserInfo1, this.base64Picture);
         }
     }
 }
