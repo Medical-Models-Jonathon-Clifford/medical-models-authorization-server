@@ -34,7 +34,6 @@ import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
-import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
@@ -56,14 +55,17 @@ public class SecurityConfig {
     @Value("${jwt.timeout:30m}")
     private String jwtTimeout;
 
-    @Value("${keySetURI}")
-    private String keySetUri;
-
     @Bean
     @Order(1)
     public SecurityFilterChain authzServerFilterChain(final HttpSecurity http)
             throws Exception {
-        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
+        final var authzServerConfigurer = OAuth2AuthorizationServerConfigurer.authorizationServer();
+        http
+                .securityMatcher(authzServerConfigurer.getEndpointsMatcher())
+                .with(authzServerConfigurer, Customizer.withDefaults())
+                .authorizeHttpRequests((authorize) ->
+                                               authorize.anyRequest().authenticated()
+                );
 
         http.cors((cors) -> cors
                 .configurationSource(createCorsConfig()));
