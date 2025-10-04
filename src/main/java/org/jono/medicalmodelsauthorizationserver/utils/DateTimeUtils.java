@@ -9,15 +9,19 @@ public class DateTimeUtils {
     }
 
     public static long parseTimeout(final String timeout) {
+        validateTimeout(timeout);
+        return Duration.parse(toIsoDuration(timeout)).toSeconds();
+    }
+
+    private static void validateTimeout(final String timeout) {
         if (timeout == null || timeout.isEmpty()) {
             throw new IllegalArgumentException("Timeout cannot be null or empty");
         }
+    }
 
-        // Add the "PT" prefix if it's not a days-based duration
-        final String isoDuration = timeout.toLowerCase().contains("d")
+    private static String toIsoDuration(final String timeout) {
+        return timeout.toLowerCase().contains("d")
                 ? "P" + timeout.toUpperCase()
                 : "PT" + timeout.toUpperCase();
-
-        return Duration.parse(isoDuration).toSeconds();
     }
 }
