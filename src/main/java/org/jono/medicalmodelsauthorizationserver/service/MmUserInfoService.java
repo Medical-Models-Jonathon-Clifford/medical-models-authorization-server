@@ -3,7 +3,6 @@ package org.jono.medicalmodelsauthorizationserver.service;
 import java.util.Collection;
 import java.util.List;
 import org.jono.medicalmodelsauthorizationserver.model.LoginCompanies;
-import org.jono.medicalmodelsauthorizationserver.model.LoginUser;
 import org.jono.medicalmodelsauthorizationserver.repository.UserInfoRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
@@ -20,10 +19,6 @@ public class MmUserInfoService {
 
     public OidcUserInfo loadUser(final String username) {
         return new OidcUserInfo(this.userInfoRepository.findByUsername(username).getOidcUserInfo().getClaims());
-    }
-
-    public List<LoginUser> getLoginUsers() {
-        return this.userInfoRepository.getLoginUsers();
     }
 
     public Collection<UserDetails> getUserDetails() {

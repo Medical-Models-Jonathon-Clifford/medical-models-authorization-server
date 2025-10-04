@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.jono.medicalmodelsauthorizationserver.model.LoginCompanies;
-import org.jono.medicalmodelsauthorizationserver.model.LoginUser;
 import org.jono.medicalmodelsauthorizationserver.model.MmUser;
 import org.jono.medicalmodelsauthorizationserver.model.MmUserBuilder;
 import org.jono.medicalmodelsauthorizationserver.utils.ResourceUtils;
@@ -23,10 +22,6 @@ public class UserInfoRepository {
 
     public MmUser findByUsername(final String username) {
         return this.userInfo.get(username);
-    }
-
-    public List<LoginUser> getLoginUsers() {
-        return userInfo.values().stream().map(MmUser::getLoginUser).toList();
     }
 
     public Collection<UserDetails> getUserDetails() {
