@@ -52,9 +52,9 @@ public class UserInfoRepository {
                 .roles(List.of("SUPPORT"))
                 .base64Picture(getAvatar("images/it-crowd-roy-1.png"))
                 .build();
-        final MmUser mmoss = mmUserBuilder.builder().username(
-                        "mmoss")
+        final MmUser mmoss = mmUserBuilder.builder()
                 .userId("2")
+                .username("mmoss")
                 .password("y?jaHKGTaji6xAd9")
                 .companyId("1")
                 .honorific("Mr.")
