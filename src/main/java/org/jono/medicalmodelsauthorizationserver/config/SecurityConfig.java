@@ -24,7 +24,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
@@ -65,10 +65,9 @@ public class SecurityConfig {
                 .with(authzServerConfigurer, Customizer.withDefaults())
                 .authorizeHttpRequests((authorize) ->
                                                authorize.anyRequest().authenticated()
-                );
-
-        http.cors((cors) -> cors
-                .configurationSource(createCorsConfig()));
+                )
+                .cors((cors) -> cors
+                        .configurationSource(createCorsConfig()));
 
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 .oidc(Customizer.withDefaults());
@@ -110,14 +109,15 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public RegisteredClientRepository registeredClientRepository(@Value("${base.url}") final String baseUrl) {
+    public RegisteredClientRepository registeredClientRepository(@Value("${base.url}") final String baseUrl,
+            final PasswordEncoder passwordEncoder) {
         final var nextAuthClient = RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId("next-auth-client")
-                .clientSecret("next-auth-client-secret")
+                .clientSecret(passwordEncoder.encode("next-auth-client-secret"))
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .redirectUris(uris -> uris.add(baseUrl + "/api/auth/callback/my_authorization_server"))

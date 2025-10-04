@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.stereotype.Component;
 
@@ -12,18 +13,22 @@ import org.springframework.stereotype.Component;
 public class MmUserBuilder {
 
     private final String baseUrl;
+    private final PasswordEncoder passwordEncoder;
 
-    public MmUserBuilder(@Value("${base.url}") final String baseUrl) {
+    public MmUserBuilder(@Value("${base.url}") final String baseUrl,
+            final PasswordEncoder passwordEncoder) {
         this.baseUrl = baseUrl;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Builder builder() {
-        return new Builder(this.baseUrl);
+        return new Builder(this.baseUrl, this.passwordEncoder);
     }
 
     public static final class Builder {
 
         private final String baseUrl;
+        private final PasswordEncoder passwordEncoder;
         private final String picturesUrl;
         private String username;
         private String password;
@@ -35,8 +40,9 @@ public class MmUserBuilder {
         private String companyId;
         private String userId;
 
-        Builder(final String baseUrl) {
+        Builder(final String baseUrl, final PasswordEncoder passwordEncoder) {
             this.baseUrl = baseUrl;
+            this.passwordEncoder = passwordEncoder;
             this.picturesUrl = baseUrl + "/users/picture";
         }
 
@@ -91,7 +97,7 @@ public class MmUserBuilder {
                                                       this.username, this.password);
             final UserDetails userDetails = User.withUsername(
                             this.username)
-                    .password(this.password)
+                    .password(this.passwordEncoder.encode(this.password))
                     .roles(this.roles.toArray(new String[0]))
                     .build();
             final OidcUserInfo oidcUserInfo1 = OidcUserInfo.builder()
