@@ -112,24 +112,13 @@ public class SecurityConfig {
     }
 
     @Bean
-    public RegisteredClientRepository registeredClientRepository() {
-        // final var registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
-        //         .clientId("client")
-        //         .clientSecret("secret")
-        //         .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-        //         .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-        //         .redirectUri("http://localhost:8081/login/oauth2/code/my_authorization_server")
-        //         .scope(OidcScopes.OPENID)
-        //         .build();
-
-        final var nextAuthClient = RegisteredClient.withId(UUID.randomUUID().toString()) // Use your client ID
+    public RegisteredClientRepository registeredClientRepository(@Value("${base.url}") final String baseUrl) {
+        final var nextAuthClient = RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId("next-auth-client")
-                .clientSecret("next-auth-client-secret") // Use your actual secret
+                .clientSecret("next-auth-client-secret")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .redirectUris(uris -> uris.add("http://localhost:3000/api/auth/callback/my_authorization_server"))
-                .redirectUris(
-                        uris -> uris.add("https://www.medicalmodels.net/api/auth/callback/my_authorization_server"))
+                .redirectUris(uris -> uris.add(baseUrl + "/api/auth/callback/my_authorization_server"))
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
                 .clientSettings(ClientSettings.builder()
@@ -137,7 +126,6 @@ public class SecurityConfig {
                                         .build())
                 .build();
 
-        // return new InMemoryRegisteredClientRepository(registeredClient, nextAuthClient);
         return new InMemoryRegisteredClientRepository(nextAuthClient);
     }
 
