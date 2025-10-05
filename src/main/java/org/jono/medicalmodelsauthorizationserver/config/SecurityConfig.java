@@ -1,7 +1,5 @@
 package org.jono.medicalmodelsauthorizationserver.config;
 
-import static org.jono.medicalmodelsauthorizationserver.utils.DateTimeUtils.parseTimeout;
-
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
@@ -17,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.jono.medicalmodelsauthorizationserver.service.MmUserInfoService;
+import org.jono.medicalmodelsauthorizationserver.utils.ClockUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -153,9 +152,11 @@ public class SecurityConfig {
     }
 
     @Bean
-    public OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer(final MmUserInfoService mmUserInfoService) {
+    public OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer(final MmUserInfoService mmUserInfoService,
+            final ClockUtils clockUtils) {
         return (context) -> {
-            context.getClaims().expiresAt(createJwtExpirationTime());
+            final Instant expiresAt = clockUtils.calculateTimeoutFromNow(jwtTimeout);
+            context.getClaims().expiresAt(expiresAt);
 
             if (isIdToken(context)) {
                 final String name = context.getPrincipal().getName();
@@ -168,10 +169,5 @@ public class SecurityConfig {
 
     private boolean isIdToken(final JwtEncodingContext context) {
         return OidcParameterNames.ID_TOKEN.equals(context.getTokenType().getValue());
-    }
-
-    private Instant createJwtExpirationTime() {
-        final long jwtTimeoutSeconds = parseTimeout(jwtTimeout);
-        return Instant.now().plusSeconds(jwtTimeoutSeconds);
     }
 }
