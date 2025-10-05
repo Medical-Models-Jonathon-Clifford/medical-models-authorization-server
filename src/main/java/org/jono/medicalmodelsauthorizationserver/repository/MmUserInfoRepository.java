@@ -1,8 +1,8 @@
 package org.jono.medicalmodelsauthorizationserver.repository;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.jono.medicalmodelsauthorizationserver.model.LoginCompanies;
 import org.jono.medicalmodelsauthorizationserver.model.MmUser;
 import org.jono.medicalmodelsauthorizationserver.model.MmUserBuilder;
@@ -10,12 +10,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public final class UserInfoRepository {
+public final class MmUserInfoRepository {
 
     private final Map<String, MmUser> userInfo;
     private final List<LoginCompanies> companyInfo;
 
-    public UserInfoRepository(final MmUserBuilder mmUserBuilder) {
+    public MmUserInfoRepository(final MmUserBuilder mmUserBuilder) {
         final MmUser rtrenneman = mmUserBuilder.builder()
                 .userId("1")
                 .username("rtrenneman")
@@ -138,11 +138,11 @@ public final class UserInfoRepository {
         this.companyInfo = List.of(mmSupport, house, mash);
     }
 
-    public MmUser findByUsername(final String username) {
-        return this.userInfo.get(username);
+    public Optional<MmUser> findByUsername(final String username) {
+        return Optional.ofNullable(this.userInfo.get(username));
     }
 
-    public Collection<UserDetails> getUserDetails() {
+    public List<UserDetails> getUserDetails() {
         return userInfo.values().stream().map(MmUser::userDetails).toList();
     }
 

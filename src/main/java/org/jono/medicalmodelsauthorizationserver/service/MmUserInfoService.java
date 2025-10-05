@@ -1,9 +1,10 @@
 package org.jono.medicalmodelsauthorizationserver.service;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import org.jono.medicalmodelsauthorizationserver.model.LoginCompanies;
-import org.jono.medicalmodelsauthorizationserver.repository.UserInfoRepository;
+import org.jono.medicalmodelsauthorizationserver.model.MmUser;
+import org.jono.medicalmodelsauthorizationserver.repository.MmUserInfoRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.stereotype.Service;
@@ -11,21 +12,22 @@ import org.springframework.stereotype.Service;
 @Service
 public final class MmUserInfoService {
 
-    private final UserInfoRepository userInfoRepository;
+    private final MmUserInfoRepository mmUserInfoRepository;
 
-    public MmUserInfoService(final UserInfoRepository userInfoRepository) {
-        this.userInfoRepository = userInfoRepository;
+    public MmUserInfoService(final MmUserInfoRepository mmUserInfoRepository) {
+        this.mmUserInfoRepository = mmUserInfoRepository;
     }
 
-    public OidcUserInfo loadUser(final String username) {
-        return new OidcUserInfo(this.userInfoRepository.findByUsername(username).oidcUserInfo().getClaims());
+    public Optional<OidcUserInfo> loadUser(final String username) {
+        final Optional<MmUser> mmUser = this.mmUserInfoRepository.findByUsername(username);
+        return mmUser.map(u -> new OidcUserInfo(u.oidcUserInfo().getClaims()));
     }
 
-    public Collection<UserDetails> getUserDetails() {
-        return this.userInfoRepository.getUserDetails();
+    public List<UserDetails> getUserDetails() {
+        return this.mmUserInfoRepository.getUserDetails();
     }
 
     public List<LoginCompanies> getLoginCompanies() {
-        return this.userInfoRepository.getLoginCompanies();
+        return this.mmUserInfoRepository.getLoginCompanies();
     }
 }

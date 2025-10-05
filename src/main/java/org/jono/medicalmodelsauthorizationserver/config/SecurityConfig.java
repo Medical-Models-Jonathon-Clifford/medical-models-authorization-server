@@ -14,6 +14,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.jono.medicalmodelsauthorizationserver.service.MmUserInfoService;
 import org.springframework.beans.factory.annotation.Value;
@@ -57,8 +58,7 @@ public class SecurityConfig {
 
     @Bean
     @Order(1)
-    public SecurityFilterChain authzServerFilterChain(final HttpSecurity http)
-            throws Exception {
+    public SecurityFilterChain authzServerFilterChain(final HttpSecurity http) throws Exception {
         final var authzServerConfigurer = OAuth2AuthorizationServerConfigurer.authorizationServer();
         http
                 .securityMatcher(authzServerConfigurer.getEndpointsMatcher())
@@ -157,13 +157,17 @@ public class SecurityConfig {
         return (context) -> {
             context.getClaims().expiresAt(createJwtExpirationTime());
 
-            if (OidcParameterNames.ID_TOKEN.equals(context.getTokenType().getValue())) {
-                final OidcUserInfo userInfo = mmUserInfoService.loadUser(
-                        context.getPrincipal().getName());
-                context.getClaims().claims(claims ->
-                                                   claims.putAll(userInfo.getClaims()));
+            if (isIdToken(context)) {
+                final String name = context.getPrincipal().getName();
+                final Optional<OidcUserInfo> userInfo = mmUserInfoService.loadUser(name);
+                userInfo.ifPresent(
+                        oidcUserInfo -> context.getClaims().claims(claims -> claims.putAll(oidcUserInfo.getClaims())));
             }
         };
+    }
+
+    private boolean isIdToken(final JwtEncodingContext context) {
+        return OidcParameterNames.ID_TOKEN.equals(context.getTokenType().getValue());
     }
 
     private Instant createJwtExpirationTime() {
