@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MmUserInfoService {
+public final class MmUserInfoService {
 
     private final UserInfoRepository userInfoRepository;
 
@@ -18,7 +18,7 @@ public class MmUserInfoService {
     }
 
     public OidcUserInfo loadUser(final String username) {
-        return new OidcUserInfo(this.userInfoRepository.findByUsername(username).getOidcUserInfo().getClaims());
+        return new OidcUserInfo(this.userInfoRepository.findByUsername(username).oidcUserInfo().getClaims());
     }
 
     public Collection<UserDetails> getUserDetails() {

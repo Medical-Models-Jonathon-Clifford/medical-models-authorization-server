@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MmUserBuilder {
+public final class MmUserBuilder {
 
     private final String baseUrl;
     private final PasswordEncoder passwordEncoder;
@@ -35,7 +35,6 @@ public class MmUserBuilder {
         private List<String> roles;
         private String givenName;
         private String familyName;
-        private String base64Picture;
         private String honorific;
         private String companyId;
         private String userId;
@@ -68,11 +67,6 @@ public class MmUserBuilder {
 
         public Builder familyName(final String familyName) {
             this.familyName = familyName;
-            return this;
-        }
-
-        public Builder base64Picture(final String base64Picture) {
-            this.base64Picture = base64Picture;
             return this;
         }
 
@@ -117,7 +111,7 @@ public class MmUserBuilder {
                     .claim("userId", this.userId)
                     .updatedAt("1970-01-01T00:00:00Z")
                     .build();
-            return new MmUser(loginUser, userDetails, oidcUserInfo1, this.base64Picture);
+            return new MmUser(loginUser, userDetails, oidcUserInfo1);
         }
     }
 }

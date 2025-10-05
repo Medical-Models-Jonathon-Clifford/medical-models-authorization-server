@@ -2,7 +2,7 @@ package org.jono.medicalmodelsauthorizationserver.utils;
 
 import java.time.Duration;
 
-public class DateTimeUtils {
+public final class DateTimeUtils {
 
     private DateTimeUtils() {
         // Utility class

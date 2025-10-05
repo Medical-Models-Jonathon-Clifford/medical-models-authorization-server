@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class LoginController {
+public final class LoginController {
 
     private final MmUserInfoService mmUserInfoService;
 

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
 
-public class ResourceUtils {
+public final class ResourceUtils {
 
     private ResourceUtils() {
         // Utility class

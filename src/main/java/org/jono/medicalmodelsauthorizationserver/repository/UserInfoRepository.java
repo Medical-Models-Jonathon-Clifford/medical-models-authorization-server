@@ -1,37 +1,21 @@
 package org.jono.medicalmodelsauthorizationserver.repository;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.jono.medicalmodelsauthorizationserver.model.LoginCompanies;
 import org.jono.medicalmodelsauthorizationserver.model.MmUser;
 import org.jono.medicalmodelsauthorizationserver.model.MmUserBuilder;
-import org.jono.medicalmodelsauthorizationserver.utils.ResourceUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserInfoRepository {
+public final class UserInfoRepository {
 
-    private final Map<String, MmUser> userInfo = new HashMap<>();
-    private final List<LoginCompanies> companyInfo = new ArrayList<>();
+    private final Map<String, MmUser> userInfo;
+    private final List<LoginCompanies> companyInfo;
 
-    public MmUser findByUsername(final String username) {
-        return this.userInfo.get(username);
-    }
-
-    public Collection<UserDetails> getUserDetails() {
-        return userInfo.values().stream().map(MmUser::getUserDetails).toList();
-    }
-
-    public List<LoginCompanies> getLoginCompanies() {
-        return companyInfo;
-    }
-
-    public UserInfoRepository(final MmUserBuilder mmUserBuilder) throws IOException {
+    public UserInfoRepository(final MmUserBuilder mmUserBuilder) {
         final MmUser rtrenneman = mmUserBuilder.builder()
                 .userId("1")
                 .username("rtrenneman")
@@ -41,7 +25,6 @@ public class UserInfoRepository {
                 .givenName("Roy")
                 .familyName("Trenneman")
                 .roles(List.of("SUPPORT"))
-                .base64Picture(getAvatar("images/it-crowd-roy-1.png"))
                 .build();
         final MmUser mmoss = mmUserBuilder.builder()
                 .userId("2")
@@ -52,7 +35,6 @@ public class UserInfoRepository {
                 .givenName("Maurice")
                 .familyName("Moss")
                 .roles(List.of("SUPPORT"))
-                .base64Picture(getAvatar("images/it-crowd-moss-1.png"))
                 .build();
         final MmUser jbarber = mmUserBuilder.builder()
                 .userId("3")
@@ -63,7 +45,6 @@ public class UserInfoRepository {
                 .givenName("Jen")
                 .familyName("Barber")
                 .roles(List.of("SUPPORT"))
-                .base64Picture(getAvatar("images/it-crowd-jen-1.png"))
                 .build();
         final MmUser lcuddy = mmUserBuilder.builder()
                 .userId("4")
@@ -74,7 +55,6 @@ public class UserInfoRepository {
                 .givenName("Lisa")
                 .familyName("Cuddy")
                 .roles(List.of("ADMIN"))
-                .base64Picture(getAvatar("images/cutty-profile-picture.png"))
                 .build();
         final MmUser ghouse = mmUserBuilder.builder()
                 .userId("5")
@@ -85,7 +65,6 @@ public class UserInfoRepository {
                 .givenName("Gregory")
                 .familyName("House")
                 .roles(List.of("USER"))
-                .base64Picture(getAvatar("images/house-md-image-2.png"))
                 .build();
         final MmUser jwilson = mmUserBuilder.builder()
                 .userId("6")
@@ -96,7 +75,6 @@ public class UserInfoRepository {
                 .givenName("James")
                 .familyName("Wilson")
                 .roles(List.of("USER"))
-                .base64Picture(getAvatar("images/house-wilson-image-1.png"))
                 .build();
         final MmUser spotter = mmUserBuilder.builder()
                 .userId("7")
@@ -107,7 +85,6 @@ public class UserInfoRepository {
                 .givenName("Sherman T.")
                 .familyName("Potter")
                 .roles(List.of("ADMIN"))
-                .base64Picture(getAvatar("images/mash-potter-1.png"))
                 .build();
         final MmUser bpierce = mmUserBuilder.builder()
                 .userId("8")
@@ -118,7 +95,6 @@ public class UserInfoRepository {
                 .givenName("\"Hawkeye\"")
                 .familyName("Pierce")
                 .roles(List.of("USER"))
-                .base64Picture(getAvatar("images/mash-hawkeye-1.png"))
                 .build();
         final MmUser woreilly = mmUserBuilder.builder()
                 .userId("9")
@@ -129,40 +105,48 @@ public class UserInfoRepository {
                 .givenName("Walter \"Radar\"")
                 .familyName("O'Reilly")
                 .roles(List.of("USER"))
-                .base64Picture(getAvatar("images/mash-radar-1.png"))
                 .build();
 
-        this.userInfo.put("rtrenneman", rtrenneman);
-        this.userInfo.put("mmoss", mmoss);
-        this.userInfo.put("jbarber", jbarber);
-        this.userInfo.put("lcuddy", lcuddy);
-        this.userInfo.put("ghouse", ghouse);
-        this.userInfo.put("jwilson", jwilson);
-        this.userInfo.put("spotter", spotter);
-        this.userInfo.put("bpierce", bpierce);
-        this.userInfo.put("woreilly", woreilly);
+        this.userInfo = Map.of(
+                "rtrenneman", rtrenneman,
+                "mmoss", mmoss,
+                "jbarber", jbarber,
+                "lcuddy", lcuddy,
+                "ghouse", ghouse,
+                "jwilson", jwilson,
+                "spotter", spotter,
+                "bpierce", bpierce,
+                "woreilly", woreilly
+        );
 
         final var mmSupport = new LoginCompanies("1", "Medical Models IT Support Crowd",
-                                                 List.of(rtrenneman.getLoginUser(),
-                                                              mmoss.getLoginUser(),
-                                                              jbarber.getLoginUser())
+                                                 List.of(rtrenneman.loginUser(),
+                                                         mmoss.loginUser(),
+                                                         jbarber.loginUser())
         );
         final var house = new LoginCompanies("2", "House MD Centre for Superheroes",
-                                             List.of(lcuddy.getLoginUser(),
-                                                          ghouse.getLoginUser(),
-                                                          jwilson.getLoginUser())
+                                             List.of(lcuddy.loginUser(),
+                                                     ghouse.loginUser(),
+                                                     jwilson.loginUser())
         );
         final var mash = new LoginCompanies("3", "Old Action Heroes M*A*S*H",
-                                              List.of(spotter.getLoginUser(),
-                                                           bpierce.getLoginUser(),
-                                                           woreilly.getLoginUser())
+                                            List.of(spotter.loginUser(),
+                                                    bpierce.loginUser(),
+                                                    woreilly.loginUser())
         );
-        this.companyInfo.add(mmSupport);
-        this.companyInfo.add(house);
-        this.companyInfo.add(mash);
+
+        this.companyInfo = List.of(mmSupport, house, mash);
     }
 
-    private String getAvatar(final String path) throws IOException {
-        return ResourceUtils.loadBase64ResourceFile(path);
+    public MmUser findByUsername(final String username) {
+        return this.userInfo.get(username);
+    }
+
+    public Collection<UserDetails> getUserDetails() {
+        return userInfo.values().stream().map(MmUser::userDetails).toList();
+    }
+
+    public List<LoginCompanies> getLoginCompanies() {
+        return companyInfo;
     }
 }
