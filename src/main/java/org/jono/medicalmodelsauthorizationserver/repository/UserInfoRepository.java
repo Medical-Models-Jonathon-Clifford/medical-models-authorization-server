@@ -31,10 +31,6 @@ public class UserInfoRepository {
         return companyInfo;
     }
 
-    public String getBase64Picture(final String username) {
-        return userInfo.get(username).getBase64Picture();
-    }
-
     public UserInfoRepository(final MmUserBuilder mmUserBuilder) throws IOException {
         final MmUser rtrenneman = mmUserBuilder.builder()
                 .userId("1")

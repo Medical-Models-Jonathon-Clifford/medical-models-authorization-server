@@ -106,7 +106,7 @@ public class MmUserBuilder {
                     .givenName(this.givenName)
                     .familyName(this.familyName)
                     .profile(this.baseUrl + "/" + this.username)
-                    .picture(this.picturesUrl + "/" + this.username + ".png")
+                    .picture(this.picturesUrl + "/" + this.username + ".webp")
                     .email(this.username + "@example.com")
                     .emailVerified(true)
                     .gender("female")

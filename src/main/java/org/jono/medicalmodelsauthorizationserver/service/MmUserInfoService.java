@@ -28,8 +28,4 @@ public class MmUserInfoService {
     public List<LoginCompanies> getLoginCompanies() {
         return this.userInfoRepository.getLoginCompanies();
     }
-
-    public String getBase64Picture(final String username) {
-        return this.userInfoRepository.getBase64Picture(username);
-    }
 }
