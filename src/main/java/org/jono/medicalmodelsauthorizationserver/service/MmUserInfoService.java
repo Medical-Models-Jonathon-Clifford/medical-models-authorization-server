@@ -32,8 +32,4 @@ public class MmUserInfoService {
     public String getBase64Picture(final String username) {
         return this.userInfoRepository.getBase64Picture(username);
     }
-
-    public String getBase64Logo(final String companyId) {
-        return this.userInfoRepository.getBase64Logo(companyId);
-    }
 }

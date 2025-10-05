@@ -18,7 +18,6 @@ public class UserInfoRepository {
 
     private final Map<String, MmUser> userInfo = new HashMap<>();
     private final List<LoginCompanies> companyInfo = new ArrayList<>();
-    private final Map<String, String> companyLogoMap = new HashMap<>();
 
     public MmUser findByUsername(final String username) {
         return this.userInfo.get(username);
@@ -30,10 +29,6 @@ public class UserInfoRepository {
 
     public List<LoginCompanies> getLoginCompanies() {
         return companyInfo;
-    }
-
-    public String getBase64Logo(final String companyId) {
-        return companyLogoMap.get(companyId);
     }
 
     public String getBase64Picture(final String username) {
@@ -169,10 +164,6 @@ public class UserInfoRepository {
         this.companyInfo.add(mmSupport);
         this.companyInfo.add(house);
         this.companyInfo.add(mash);
-
-        this.companyLogoMap.put("1", getAvatar("images/medical-models-company-logo-1.png"));
-        this.companyLogoMap.put("2", getAvatar("images/house-md-logo-1.png"));
-        this.companyLogoMap.put("3", getAvatar("images/mash-tv-logo-1.jpg"));
     }
 
     private String getAvatar(final String path) throws IOException {

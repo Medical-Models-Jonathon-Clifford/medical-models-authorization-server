@@ -152,7 +152,7 @@
 <div class="container">
     <div th:each="company : ${loginCompanies}" class="company">
         <div class="company-logo">
-            <img class="company-logo-img" th:src="'/companies/pictures/company-logo-' + ${company.companyId} + '.png'" alt="Company Logo"/>
+            <img class="company-logo-img" th:src="'/companies/company-logo-' + ${company.companyId} + '.webp'" alt="Company Logo"/>
         </div>
         <div class="company-name"><p th:text="${company.name}"></p></div>
         <div class="users-container">
