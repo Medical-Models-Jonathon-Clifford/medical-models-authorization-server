@@ -62,7 +62,6 @@
             <!-- Temporary explicit version to fix Thymeleaf bug -->
             <version>3.1.1.RELEASE</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -74,12 +73,6 @@
             <artifactId>guava</artifactId>
             <version>33.0.0-jre</version>
         </dependency>
-        <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-            <version>8.5.8</version>
-        </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
